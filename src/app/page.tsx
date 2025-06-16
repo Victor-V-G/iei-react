@@ -9,6 +9,10 @@ interface Persona{
   apellido : string,
   edad : number,
 }
+
+// como su nombre lo dice, es el estado inicial en el que comenzaran estas variables,
+// "" : string sin nada asignado
+// 0 : number sin valor asignado
 const initialStatePersona:Persona = {
   nombre: "",
   apellido: "",
