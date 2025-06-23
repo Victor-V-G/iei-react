@@ -1,5 +1,5 @@
 'use client' //directiva para obligar a que funcione ya que no estamos trabajando en un servidor
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //npx next dev : para iniciar el programa en el navegador
 
@@ -20,12 +20,21 @@ const initialStatePersona:Persona = {
 }
 
 export default function Home() {
+  const miStorage = window.localStorage
   // first: nombre del estado,
   // setFirst: cambiar el estado
   // " ": string sin nada asignado
   // --dependiendo del tipo de estado inicial indica cual sera el tipo del estado, es decir sera String o Number
   const [persona, setPersona] = useState(initialStatePersona)
+  const [personas,setPersonas] = useState<Persona[]>([]) //personas sera un listado, persona sera un listado
   const [eNombre, setENombre] = useState("")
+
+  useEffect(()=>{
+    console.log("hola")
+  },[persona])
+  // centra algo del codigo, es decir alguna variable o funcion, y cada vez que haga algo ejecutara lo que se le pida
+  // en este caso dira por cada cosa que pase en [persona]
+
   //handle: manipula algo o una funcion
   const handlePersona = (name:string,value:string)=>{
     // validaciones
@@ -43,6 +52,12 @@ export default function Home() {
     }else{
       setENombre("")
     }
+  };
+
+  //funcion que se llama al presionar el boton registrar
+  const handleRegistrar = ()=>{
+    miStorage.setItem("personas",JSON.stringify([...personas,persona]))
+    // se crea un listado con la persona, se transforma en string y se pasa a json y se guarda en local storage
   }
 
   return (
@@ -75,7 +90,8 @@ export default function Home() {
         placeholder="Edad"
         onChange={(e)=>handlePersona(e.currentTarget.name,e.currentTarget.value)}/><br />
       <span></span><br />
-      <button>Registrar</button>
+      <button
+        onClick={()=>handleRegistrar}>Registrar</button>
       
     </form>
   );
