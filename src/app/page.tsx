@@ -26,12 +26,16 @@ export default function Home() {
   // " ": string sin nada asignado
   // --dependiendo del tipo de estado inicial indica cual sera el tipo del estado, es decir sera String o Number
   const [persona, setPersona] = useState(initialStatePersona)
-  const [personas,setPersonas] = useState<Persona[]>([]) //personas sera un listado, persona sera un listado
+  const [personas, setPersonas] = useState<Persona[]>([]) //personas sera un listado, persona sera un listado
   const [eNombre, setENombre] = useState("")
 
   useEffect(()=>{
-    console.log("hola")
-  },[persona])
+    let listadoStr = miStorage.getItem("personas")
+    if (listadoStr != null){
+      let listado = JSON.parse(listadoStr)
+      setPersonas(listado)
+    }
+  },[])
   // centra algo del codigo, es decir alguna variable o funcion, y cada vez que haga algo ejecutara lo que se le pida
   // en este caso dira por cada cosa que pase en [persona]
 
@@ -91,7 +95,8 @@ export default function Home() {
         onChange={(e)=>handlePersona(e.currentTarget.name,e.currentTarget.value)}/><br />
       <span></span><br />
       <button
-        onClick={()=>handleRegistrar}>Registrar</button>
+        onClick={()=>handleRegistrar()}>Registrar
+      </button>
       
     </form>
   );
